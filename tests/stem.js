@@ -77,3 +77,17 @@ test('Extract all grammemes unknown word', function(done) {
         done();
     });
 });
+
+test('Do not extract grammemes for an unknown word if non-dictionary words are disabled', function(done) {
+    var myStem = new MyStem({
+        onlyDictionaryWords: true,
+    });
+    myStem.start();
+
+    myStem.extractAllGrammemes("хелоу").then(function(grammemes) {
+        assert.deepEqual( grammemes, [] );
+    }).then(function() {
+        myStem.stop();
+        done();
+    });
+});
